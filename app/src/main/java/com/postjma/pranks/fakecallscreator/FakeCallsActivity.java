@@ -99,7 +99,19 @@ public class FakeCallsActivity extends AppCompatActivity {
                 cv.put(CallLog.Calls.NUMBER, phoneNo);
                 cv.put(CallLog.Calls.DURATION, duration);
                 cv.put(CallLog.Calls.NEW, 1);
-                cv.put(CallLog.Calls.DATE, datestr);
+                try {
+                    if (datestr.trim().toUpperCase().equals("NOW"))
+                    {
+                        cv.put(CallLog.Calls.DATE, System.currentTimeMillis());
+                    }
+                    else
+                    {
+                        cv.put(CallLog.Calls.DATE, datestr);
+                    }
+                } catch (Exception e2) {
+                    // ignore
+                    cv.put(CallLog.Calls.DATE, datestr);
+                }
                 cv.put(CallLog.Calls.TYPE, typeint);
                 cv.put(CallLog.Calls.CACHED_NAME, "");
                 cv.put(CallLog.Calls.CACHED_NUMBER_TYPE, 0);
@@ -118,7 +130,8 @@ public class FakeCallsActivity extends AppCompatActivity {
                         }
                     });
                     alertDialog.setCancelable(false);
-                    alertDialog.create().show();                }
+                    alertDialog.create().show();
+                }
 
                 mPhone.setText("");
                 mDuration.setText("");
